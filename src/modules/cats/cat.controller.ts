@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpException,
   HttpStatus,
   Param,
   Post,
@@ -16,7 +17,7 @@ import { CatsService } from './services/cats.service';
 
 @Controller('cats')
 export class CatController {
-  constructor(private catsService: CatsService) {}
+  constructor(private catsService: CatsService) { }
 
   @Post()
   async create(@Body() createCatDto: CreateCatDto) {
@@ -42,7 +43,7 @@ export class CatController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return `this action returns a #${id} cat`;
+    throw new HttpException('Forbidden: ' + id, HttpStatus.FORBIDDEN);
   }
 
   @Put(':id')
